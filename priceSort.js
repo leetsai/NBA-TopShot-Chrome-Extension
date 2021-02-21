@@ -69,21 +69,34 @@ function sortListings(sortBy) {
     dropdown.removeChild(dropdown.childNodes[0]);
     var optionsList = dropdown.options;
     
-    var newList = []
+    var newList = [];
+    let singlePrice = 0;
+    let singleCount = 0;
+    let doublePrice = 0;
+    let doubleCount = 0;
+    let triplePrice = 0;
+    let tripleCount = 0;
+
     for (var i = 0; i < optionsList.length; i++) {
         optionsList[i].price = optionsList[i].innerText.split('$')[1];
         newList.push(optionsList[i]);
         // single digit serials
         if (optionsList[i].value < 10) {
             optionsList[i].style.backgroundColor = "#0F5298";
+            singlePrice += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            singleCount += 1;
         }
         // double digit serials
         else if (optionsList[i].value < 100) {
             optionsList[i].style.backgroundColor = "#3C99DC";
+            doublePrice += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            doubleCount += 1;
         }
         // triple digit serials
         else if (optionsList[i].value < 1000) {
             optionsList[i].style.backgroundColor = "#66D3FA";
+            triplePrice += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            tripleCount += 1;
         }
         // the rest
         else {
@@ -119,4 +132,12 @@ function sortListings(sortBy) {
         optionsList[i] = newList[i];
     }
     optionsList[0].selected = true;
+
+    console.log('0-9 average price: ', average(singlePrice, singleCount));
+    console.log('10-99 average price: ', average(doublePrice, doubleCount));
+    console.log('100-999 average price: ', average(triplePrice, tripleCount));
+}
+
+var average = function(sum, count) {
+    return (+sum / +count).toFixed(2);
 }
