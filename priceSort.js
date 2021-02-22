@@ -254,28 +254,7 @@ function sortListings(sortBy) {
     }
 
     // ****** CONSOLE LOG PARTY ******
-    console.log('=================================');
-    console.log(`0-9 average price: $${average(oneDigitSum, oneDigitCount)}`);
-    console.log(`   #${oneDigitSerial} - $${oneDigitMin}`);
-    console.log(`10-99 average price: $${average(twoDigitSum, twoDigitCount)}`);
-    console.log(`   #${twoDigitSerial} - $${twoDigitMin}`);
-    console.log(`100-999 average price: $${average(threeDigitSum, threeDigitCount)}`);
-    console.log(`   #${threeDigitSerial} - $${threeDigitMin}`);
-    console.log(`1000-1999 average price: $${average(fourOneDigitSumOne, fourOneDigitCountOne)}`);
-    console.log(`   #${fourOneDigitSerialOne} - $${fourOneDigitMinOne}`);
-    console.log(`2000-2999 average price: $${average(fourTwoDigitSumOne, fourTwoDigitCountOne)}`);
-    console.log(`   #${fourTwoDigitSerialOne} - $${fourTwoDigitMinOne}`);
-    console.log(`3000-3999 average price: $${average(fourThreeDigitSumOne, fourThreeDigitCountOne)}`);
-    console.log(`   #${fourThreeDigitSerialOne} - $${fourThreeDigitMinOne}`);
-    console.log(`4000-4999 average price: $${average(fourFourDigitSumOne, fourFourDigitCountOne)}`);
-    console.log(`   #${fourFourDigitSerialOne} - $${fourFourDigitMinOne}`);
-    console.log(`5000-9999 average price: $${average(fourDigitSumTwo, fourDigitCountTwo)}`);
-    console.log(`   #${fourDigitSerialTwo} - $${fourDigitMinTwo}`);
-    console.log(`10000-12499 average price: $${average(fiveDigitSumOne, fiveDigitCountOne)}`);
-    console.log(`   #${fiveDigitSerialOne} - $${fiveDigitMinOne}`);
-    console.log(`12500-15000 average price: $${average(fiveDigitSumTwo, fiveDigitCountTwo)}`);
-    console.log(`   #${fiveDigitSerialTwo} - $${fiveDigitMinTwo}`);
-    console.log('================================= \n');
+    
     // ****** CONSOLE LOG PARTY ******
 
     optionsList[0].selected = true;
