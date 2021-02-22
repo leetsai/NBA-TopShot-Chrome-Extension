@@ -76,6 +76,14 @@ function sortListings(sortBy) {
     let doubleCount = 0;
     let triplePrice = 0;
     let tripleCount = 0;
+    let fourDigitPriceOne = 0;
+    let fourDigitCountOne = 0;
+    let fourDigitPriceTwo = 0;
+    let fourDigitCountTwo = 0;
+    let fiveDigitPriceOne = 0;
+    let fiveDigitCountOne = 0;
+    let fiveDigitPriceTwo = 0;
+    let fiveDigitCountTwo = 0;
 
     for (var i = 0; i < optionsList.length; i++) {
         optionsList[i].price = optionsList[i].innerText.split('$')[1];
@@ -97,6 +105,30 @@ function sortListings(sortBy) {
             optionsList[i].style.backgroundColor = "#66D3FA";
             triplePrice += parseFloat(optionsList[i].price.replace(/,/g, ''));
             tripleCount += 1;
+        }
+        // four digit serials - 1000 to 4999
+        else if (optionsList[i].value < 5000) {
+            optionsList[i].style.backgroundColor = "#66D3FA"; // change color
+            fourDigitPriceOne += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            fourDigitCountOne += 1;
+        }
+        // four digit serials - 5000 to 9999
+        else if (optionsList[i].value < 10000) {
+            optionsList[i].style.backgroundColor = "#66D3FA"; // change color
+            fourDigitPriceTwo += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            fourDigitCountTwo += 1;
+        }
+        // five digit serials - 10000 to 12499
+        else if (optionsList[i].value < 12500) {
+            optionsList[i].style.backgroundColor = "#66D3FA"; // change color
+            fiveDigitPriceOne += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            fiveDigitCountOne += 1;
+        }
+        // five digit serials - 12500 to 15000
+        else if (optionsList[i].value < 15000) {
+            optionsList[i].style.backgroundColor = "#66D3FA"; // change color
+            fiveDigitPriceTwo += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            fiveDigitCountTwo += 1;
         }
         // the rest
         else {
@@ -133,11 +165,19 @@ function sortListings(sortBy) {
     }
     optionsList[0].selected = true;
 
+    console.log('=================================');
     console.log('0-9 average price: ', average(singlePrice, singleCount));
     console.log('10-99 average price: ', average(doublePrice, doubleCount));
     console.log('100-999 average price: ', average(triplePrice, tripleCount));
+    console.log('1000-4999 average price: ', average(fourDigitPriceOne, fourDigitCountOne));
+    console.log('5000-9999 average price: ', average(fourDigitPriceTwo, fourDigitCountTwo));
+    console.log('10000-12499 average price: ', average(fiveDigitPriceOne, fiveDigitCountOne));
+    console.log('12500-15000 average price: ', average(fiveDigitPriceTwo, fiveDigitCountTwo));
+    console.log('================================= \n');
 }
 
 var average = function(sum, count) {
-    return (+sum / +count).toFixed(2);
+    let average = +sum / +count;
+
+    return isNaN(average) ? "no sales in this range" : average.toFixed(2);
 }
