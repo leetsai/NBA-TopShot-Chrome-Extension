@@ -69,66 +69,106 @@ function sortListings(sortBy) {
     dropdown.removeChild(dropdown.childNodes[0]);
     var optionsList = dropdown.options;
     
+    const maxInt = Number.MAX_SAFE_INTEGER;
+    
     var newList = [];
-    let singlePrice = 0;
-    let singleCount = 0;
-    let doublePrice = 0;
-    let doubleCount = 0;
-    let triplePrice = 0;
-    let tripleCount = 0;
-    let fourDigitPriceOne = 0;
+    let oneDigitSum = 0;
+    let oneDigitCount = 0;
+    let oneDigitMin = maxInt;
+    let oneDigitSerial = maxInt;
+    
+    let twoDigitSum = 0;
+    let twoDigitCount = 0;
+    let twoDigitMin = maxInt;
+    let twoDigitSerial = maxInt;
+    
+    let threeDigitSum = 0;
+    let threeDigitCount = 0;
+    let threeDigitMin = maxInt;
+    let threeDigitSerial = maxInt;
+    
+    let fourDigitSumOne = 0;
     let fourDigitCountOne = 0;
-    let fourDigitPriceTwo = 0;
+    let fourDigitMinOne = maxInt;
+    let fourDigitSerialOne = maxInt;
+    
+    let fourDigitSumTwo = 0;
     let fourDigitCountTwo = 0;
-    let fiveDigitPriceOne = 0;
+    let fourDigitMinTwo = maxInt;
+    let fourDigitSerialTwo = maxInt;
+    
+    let fiveDigitSumOne = 0;
     let fiveDigitCountOne = 0;
-    let fiveDigitPriceTwo = 0;
+    let fiveDigitMinOne = maxInt;
+    let fiveDigitSerialOne = maxInt;
+    
+    let fiveDigitSumTwo = 0;
     let fiveDigitCountTwo = 0;
+    let fiveDigitMinTwo = maxInt;
+    let fiveDigitSerialTwo = maxInt;
 
     for (var i = 0; i < optionsList.length; i++) {
         optionsList[i].price = optionsList[i].innerText.split('$')[1];
         newList.push(optionsList[i]);
         // single digit serials
-        if (optionsList[i].value < 10) {
+        let currentSerial = optionsList[i].value;
+        let currentPrice = optionsList[i].price.split(' - ')[0].replace(/,/g, '');
+
+        if (currentSerial < 10) {
             optionsList[i].style.backgroundColor = "#0F5298";
-            singlePrice += parseFloat(optionsList[i].price.replace(/,/g, ''));
-            singleCount += 1;
+            oneDigitSum += parseFloat(currentPrice);
+            oneDigitCount += 1;
+            oneDigitMin = Math.min(oneDigitMin, currentPrice);
+            oneDigitSerial = matchSerial(oneDigitMin, currentPrice, oneDigitSerial, currentSerial);
         }
+        
         // double digit serials
-        else if (optionsList[i].value < 100) {
+        else if (currentSerial < 100) {
             optionsList[i].style.backgroundColor = "#3C99DC";
-            doublePrice += parseFloat(optionsList[i].price.replace(/,/g, ''));
-            doubleCount += 1;
+            twoDigitSum += parseFloat(currentPrice);
+            twoDigitCount += 1;
+            twoDigitMin = Math.min(twoDigitMin, currentPrice);
+            twoDigitSerial = matchSerial(twoDigitMin, currentPrice, twoDigitSerial, currentSerial);
         }
         // triple digit serials
-        else if (optionsList[i].value < 1000) {
+        else if (currentSerial < 1000) {
             optionsList[i].style.backgroundColor = "#66D3FA";
-            triplePrice += parseFloat(optionsList[i].price.replace(/,/g, ''));
-            tripleCount += 1;
+            threeDigitSum += parseFloat(currentPrice);
+            threeDigitCount += 1;
+            threeDigitMin = Math.min(threeDigitMin, currentPrice);
+            threeDigitSerial = matchSerial(threeDigitMin, currentPrice, threeDigitSerial, currentSerial);
         }
         // four digit serials - 1000 to 4999
-        else if (optionsList[i].value < 5000) {
+        else if (currentSerial < 5000) {
             optionsList[i].style.backgroundColor = "#66D3FA"; // change color
-            fourDigitPriceOne += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            fourDigitSumOne += parseFloat(currentPrice);
             fourDigitCountOne += 1;
+            fourDigitMinOne = Math.min(fourDigitMinOne, currentPrice);
+            fourDigitSerialOne = matchSerial(fourDigitMinOne, currentPrice, fourDigitSerialOne, currentSerial);
         }
         // four digit serials - 5000 to 9999
-        else if (optionsList[i].value < 10000) {
+        else if (currentSerial < 10000) {
             optionsList[i].style.backgroundColor = "#66D3FA"; // change color
-            fourDigitPriceTwo += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            fourDigitSumTwo += parseFloat(currentPrice);
             fourDigitCountTwo += 1;
+            fourDigitMinTwo = Math.min(fourDigitMinTwo, currentPrice);
+            fourDigitSerialTwo = matchSerial(fourDigitMinTwo, currentPrice, fourDigitSerialTwo, currentSerial);
         }
         // five digit serials - 10000 to 12499
-        else if (optionsList[i].value < 12500) {
+        else if (currentSerial < 12500) {
             optionsList[i].style.backgroundColor = "#66D3FA"; // change color
-            fiveDigitPriceOne += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            fiveDigitSumOne += parseFloat(currentPrice);
             fiveDigitCountOne += 1;
+            fiveDigitMinOne = Math.min(fiveDigitMinOne, currentPrice);
+            fiveDigitSerialOne = matchSerial(fiveDigitMinOne, currentPrice, fiveDigitSerialOne, currentSerial);
         }
         // five digit serials - 12500 to 15000
-        else if (optionsList[i].value < 15000) {
+        else if (currentSerial < 15000) {
             optionsList[i].style.backgroundColor = "#66D3FA"; // change color
-            fiveDigitPriceTwo += parseFloat(optionsList[i].price.replace(/,/g, ''));
+            fiveDigitSumTwo += parseFloat(currentPrice);
             fiveDigitCountTwo += 1;
+            fiveDigitMinTwo = Math.min(fiveDigitMinTwo, currentPrice);
+            fiveDigitSerialTwo = matchSerial(fiveDigitMinTwo, currentPrice, fiveDigitSerialTwo, currentSerial);
         }
         // the rest
         else {
@@ -163,21 +203,36 @@ function sortListings(sortBy) {
     for (var i = 0; i <= optionsList.length; i++) {
         optionsList[i] = newList[i];
     }
-    optionsList[0].selected = true;
 
+    // ****** CONSOLE LOG PARTY ******
     console.log('=================================');
-    console.log('0-9 average price: ', average(singlePrice, singleCount));
-    console.log('10-99 average price: ', average(doublePrice, doubleCount));
-    console.log('100-999 average price: ', average(triplePrice, tripleCount));
-    console.log('1000-4999 average price: ', average(fourDigitPriceOne, fourDigitCountOne));
-    console.log('5000-9999 average price: ', average(fourDigitPriceTwo, fourDigitCountTwo));
-    console.log('10000-12499 average price: ', average(fiveDigitPriceOne, fiveDigitCountOne));
-    console.log('12500-15000 average price: ', average(fiveDigitPriceTwo, fiveDigitCountTwo));
+    console.log(`0-9 average price: $${average(oneDigitSum, oneDigitCount)}`);
+    console.log(`   #${oneDigitSerial} - $${oneDigitMin}`);
+    console.log(`10-99 average price: $${average(twoDigitSum, twoDigitCount)}`);
+    console.log(`   #${twoDigitSerial} - $${twoDigitMin}`);
+    console.log(`100-999 average price: $${average(threeDigitSum, threeDigitCount)}`);
+    console.log(`   #${threeDigitSerial} - $${threeDigitMin}`);
+    console.log(`1000-4999 average price: $${average(fourDigitSumOne, fourDigitCountOne)}`);
+    console.log(`   #${fourDigitSerialOne} - $${fourDigitMinOne}`);
+    console.log(`5000-9999 average price: $${average(fourDigitSumTwo, fourDigitCountTwo)}`);
+    console.log(`   #${fourDigitSerialTwo} - $${fourDigitMinTwo}`);
+    console.log(`10000-12499 average price: $${average(fiveDigitSumOne, fiveDigitCountOne)}`);
+    console.log(`   #${fiveDigitSerialOne} - $${fiveDigitMinOne}`);
+    console.log(`12500-15000 average price: $${average(fiveDigitSumTwo, fiveDigitCountTwo)}`);
+    console.log(`   #${fiveDigitSerialTwo} - $${fiveDigitMinTwo}`);
     console.log('================================= \n');
+    // ****** CONSOLE LOG PARTY ******
+
+    optionsList[0].selected = true;
 }
 
-var average = function(sum, count) {
+// UTILITIES
+const average = function(sum, count) {
     let average = +sum / +count;
 
-    return isNaN(average) ? "no sales in this range" : average.toFixed(2);
+    return isNaN(average) ? "no sales in this range" : average.toFixed(0);
+}
+
+const matchSerial = function (minPrice, currPrice, minSerial, currSerial) {
+    return minPrice == currPrice ? currSerial : minSerial;
 }
