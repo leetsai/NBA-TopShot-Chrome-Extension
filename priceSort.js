@@ -112,7 +112,7 @@ function sortListings(sortBy) {
         newList.push(optionsList[i]);
         // single digit serials
         let currentSerial = optionsList[i].value;
-        let currentPrice = optionsList[i].price.split(' - ')[0].replace(/,/g, '');
+        let currentPrice = optionsList[i].price.split(' ')[0].replace(/,/g, '');
 
         if (currentSerial < 10) {
             optionsList[i].style.backgroundColor = "#0F5298";
