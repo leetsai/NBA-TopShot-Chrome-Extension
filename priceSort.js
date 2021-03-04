@@ -66,13 +66,16 @@ function toggleStatus() {
 function sortListings(sortBy) {
     // Grab the dropdown and listings
     var dropdown = document.getElementById('moment-detailed-serialNumber');
-    console.log('dropdown: ', dropdown);
-    dropdown.removeChild(dropdown.childNodes[0]);
+    
+    if (dropdown.childNodes[0].innerText.includes('Select a Serial Number')) {
+        dropdown.removeChild(dropdown.childNodes[0]);
+    }
+    
     var optionsList = dropdown.options;
+    var newList = [];
     
     const maxInt = Number.MAX_SAFE_INTEGER;
-    
-    var newList = [];
+
     let oneDigitSum = 0;
     let oneDigitCount = 0;
     let oneDigitMin = maxInt;
@@ -113,16 +116,6 @@ function sortListings(sortBy) {
     let fourDigitMinTwo = maxInt;
     let fourDigitSerialTwo = maxInt;
 
-    // let fourDigitSumOne = 0;
-    // let fourDigitCountOne = 0;
-    // let fourDigitMinOne = maxInt;
-    // let fourDigitSerialOne = maxInt;
-    
-    // let fourDigitSumTwo = 0;
-    // let fourDigitCountTwo = 0;
-    // let fourDigitMinTwo = maxInt;
-    // let fourDigitSerialTwo = maxInt;
-    
     let fiveDigitSumOne = 0;
     let fiveDigitCountOne = 0;
     let fiveDigitMinOne = maxInt;
